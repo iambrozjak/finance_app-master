@@ -1,0 +1,50 @@
+<h1>Звіт по категоріях</h1>
+<table style="border:1px solid black;">
+  <tr>
+    <th>Категорія</th>
+    <th>Сума</th>
+  </tr>
+
+<% @report_by_category.each do |report| %>
+  <tr>
+  <td><%= report[0] %></td>
+  <td><%= report[1] %></td>
+  </tr>
+<% end %>
+</table>
+
+<table style="border:1px solid black;">
+  <tr>
+    <th>Всього:   <%= @sum %></th>
+  </tr>
+</table>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<h1>Розподіл витрат за період</h1>
+<canvas id="myChart" width="600" height="400"></canvas>
+<script>
+  const ctx = document.getElementById('myChart');
+  const data = {
+    labels: <%=raw @cat_names %>,
+    datasets: [{
+      label: 'Сума',
+      data: <%= @symas %>,
+      backgroundColor: [
+        'rgb(255, 99, 132)',
+        'rgb(54, 162, 235)',
+        'rgb(255, 205, 86)'
+      ],
+      hoverOffset: 4
+    }]
+  };
+const config = {
+  type: 'pie',
+  data: data,
+  options: {
+    responsive: false
+  }
+};
+const myChart = new Chart(ctx, config);
+myChart()
+</script>
+ 
